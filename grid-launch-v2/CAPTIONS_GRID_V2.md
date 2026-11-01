@@ -28,7 +28,7 @@ Stop switching between apps. Try OneTap free, link in bio.
 #OneTap #POS #BusinessSoftware #SmallBusinessOwner #RestaurantTech
 
 6 · p6 · Try it. On us.
-Your first month is free, no card required. Then from $69 per month per location.
+Your first month is free, no card required. Then from $89 per month per location.
 Set up from one file, no implementation meetings, works on phone, tablet or computer, and you can cancel anytime from your account.
 Start at onetaphq.com
 #OneTap #FreeTrial #SmallBusiness #BusinessSoftware #SmallBusinessOwner

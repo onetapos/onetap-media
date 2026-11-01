@@ -148,6 +148,6 @@ Historia: "¿Qué te pasa más?" · Encuesta: Citas cruzadas / Clientes que no l
 ---
 
 ## Antes de publicar
-- Confirmar que el sitio ya muestra en vivo "primer mes gratis, sin tarjeta" y "$69 al mes por local".
+- Confirmar que el sitio ya muestra en vivo "primer mes gratis, sin tarjeta" y "$89 al mes por local".
 - Confirmar que el WhatsApp +507 6009-5842 está atendido.
 - Si hay capturas reales de la app, se pueden sumar como lámina extra en los carruseles.
