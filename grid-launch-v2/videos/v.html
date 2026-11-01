@@ -1,0 +1,87 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=block');
+*{margin:0;box-sizing:border-box}
+body{width:1080px;height:1920px;background:#0E1110;font-family:Inter,sans-serif;color:#fff;overflow:hidden;position:relative}
+.glow{position:absolute;width:1400px;height:1400px;border-radius:50%;background:radial-gradient(circle,rgba(214,176,74,.22),transparent 60%);left:-160px;top:500px;animation:drift 18s linear both}
+@keyframes drift{to{transform:translate(0,300px)}}
+.sc{position:absolute;inset:0;opacity:0}
+.brand{position:absolute;top:120px;left:0;right:0;display:flex;justify-content:center;gap:18px;align-items:center;font-weight:800;letter-spacing:.16em;color:#D6B04A;font-size:26px}
+@keyframes in{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+@keyframes fade{0%{opacity:0}6%{opacity:1}94%{opacity:1}100%{opacity:0}}
+@keyframes pulse{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.9);opacity:0}}
+@keyframes hl{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes tog{from{left:6px;background:#555}to{left:58px;background:#131615}}
+@keyframes togbg{from{background:#2A2E2C}to{background:#D6B04A}}
+@keyframes dash{to{stroke-dashoffset:0}}
+h1{font-size:104px;font-weight:800;letter-spacing:-.04em;line-height:1.02;text-align:center}
+.hlw{position:relative;display:inline-block;padding:0 14px;color:#131615}
+.hlw:before{content:"";position:absolute;inset:6px 0 0;background:#D6B04A;border-radius:14px;z-index:-1;transform-origin:left;animation:hl .5s ease-out both}
+.ic{position:absolute;left:390px;top:1150px;width:300px;height:300px}
+.ring{position:absolute;inset:0;border:4px solid #D6B04A;border-radius:50%;animation:pulse 2s ease-out infinite}
+.card{background:#F0EDE3;color:#131615;border-radius:36px;padding:40px}
+.act{display:flex;gap:28px;align-items:center;background:#1A1E1C;border:2px solid #2A2E2C;border-radius:30px;padding:34px;margin-bottom:26px;color:#fff;font-size:38px;font-weight:700}
+.act small{display:block;font-size:26px;font-weight:400;color:#A9ACA6;margin-top:6px}
+.n{width:72px;height:72px;flex:none;border-radius:50%;border:3px solid #D6B04A;color:#D6B04A;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:32px}
+.sw{position:relative;width:112px;height:60px;border-radius:30px;flex:none;margin-left:auto}
+.sw i{position:absolute;top:6px;width:48px;height:48px;border-radius:50%}
+.lv{display:flex;align-items:center;gap:26px;padding:32px 34px;border-radius:28px;background:#1A1E1C;border:2px solid #2A2E2C;margin-bottom:22px;font-size:38px;font-weight:700}
+.lv small{display:block;font-size:25px;color:#A9ACA6;font-weight:400;margin-top:4px}
+.chip{display:inline-block;border:2px solid #D6B04A;color:#D6B04A;border-radius:99px;padding:16px 30px;font-size:30px;font-weight:700;margin:10px}
+.note{position:absolute;bottom:70px;left:0;right:0;text-align:center;color:#555;font-size:22px}
+</style></head><body>
+<div class="glow"></div>
+<div class="brand"><svg width="56" height="56" viewBox="0 0 100 100"><rect x="2" y="2" width="96" height="96" rx="24" fill="#0B0B0B" stroke="#2E3230" stroke-width="2"/><circle cx="47" cy="53" r="27" fill="none" stroke="#fff" stroke-width="13"/><circle cx="70" cy="30" r="12.5" fill="#D9B13B"/></svg>ONETAP AI</div>
+
+<!-- S1 0-4.5 -->
+<div class="sc" style="animation:fade 4.5s 0s both">
+ <h1 style="position:absolute;top:420px;left:60px;right:60px">What if your business<br><span style="animation:in .6s .3s both;display:inline-block">told you</span><br><span class="hlw" style="animation:in .6s .7s both">what to do</span><br><span style="animation:in .6s 1.1s both;display:inline-block">every morning?</span></h1>
+ <div class="ic"><div class="ring"></div><div class="ring" style="animation-delay:.7s"></div><div class="ring" style="animation-delay:1.4s"></div>
+  <svg style="position:absolute;left:60px;top:60px" width="180" height="180" viewBox="0 0 100 100"><rect x="2" y="2" width="96" height="96" rx="24" fill="#0B0B0B" stroke="#2E3230" stroke-width="2"/><circle cx="47" cy="53" r="27" fill="none" stroke="#fff" stroke-width="13"/><circle cx="70" cy="30" r="12.5" fill="#D9B13B"/></svg></div>
+ <div style="position:absolute;top:1560px;left:0;right:0;text-align:center;font-size:40px;color:#A9ACA6;animation:in .6s 1.8s both">Meet your morning briefing.</div>
+</div>
+
+<!-- S2 4.5-8.5 data flows in -->
+<div class="sc" style="animation:fade 4s 4.5s both">
+ <h1 style="position:absolute;top:300px;left:60px;right:60px;font-size:92px">It reads<br><span class="hlw" style="animation:in .5s 4.8s both">everything</span></h1>
+ <svg style="position:absolute;left:0;top:700px" width="1080" height="900" viewBox="0 0 1080 900" fill="none">
+  <path d="M190 120 C 300 400, 440 500, 540 640" stroke="#D6B04A" stroke-width="5" stroke-dasharray="14 14" style="stroke-dashoffset:900;animation:dash 1.4s 5.2s linear both"/>
+  <path d="M540 120 L 540 600" stroke="#D6B04A" stroke-width="5" stroke-dasharray="14 14" style="stroke-dashoffset:900;animation:dash 1.4s 5.4s linear both"/>
+  <path d="M890 120 C 780 400, 640 500, 540 640" stroke="#D6B04A" stroke-width="5" stroke-dasharray="14 14" style="stroke-dashoffset:900;animation:dash 1.4s 5.6s linear both"/>
+ </svg>
+ <div style="position:absolute;top:720px;left:60px;right:60px;display:flex;justify-content:space-between">
+  <div class="chip" style="animation:in .5s 5s both">Sales</div><div class="chip" style="animation:in .5s 5.2s both">Stock</div><div class="chip" style="animation:in .5s 5.4s both">Invoices</div></div>
+ <div style="position:absolute;top:1330px;left:390px;width:300px;height:300px;animation:in .5s 6.6s both"><div class="ring"></div><div class="ring" style="animation-delay:.7s"></div>
+  <svg style="position:absolute;left:60px;top:60px" width="180" height="180" viewBox="0 0 100 100"><rect x="2" y="2" width="96" height="96" rx="24" fill="#0B0B0B" stroke="#2E3230" stroke-width="2"/><circle cx="47" cy="53" r="27" fill="none" stroke="#fff" stroke-width="13"/><circle cx="70" cy="30" r="12.5" fill="#D9B13B"/></svg></div>
+</div>
+
+<!-- S3 8.5-14 three actions -->
+<div class="sc" style="animation:fade 5.5s 8.5s both">
+ <h1 style="position:absolute;top:280px;left:60px;right:60px;font-size:92px">And gives you<br><span class="hlw" style="animation:in .5s 8.8s both">3 actions</span></h1>
+ <div style="position:absolute;top:700px;left:70px;right:70px">
+  <div class="act" style="animation:in .5s 9.4s both"><span class="n">1</span><div>Reorder chicken today<small>Runs out Friday</small></div><div class="sw" style="animation:togbg .3s 10.4s both"><i style="animation:tog .3s 10.4s both"></i></div></div>
+  <div class="act" style="animation:in .5s 10.6s both"><span class="n">2</span><div>Review the burger price<small>Margin below your target</small></div><div class="sw" style="animation:togbg .3s 11.6s both"><i style="animation:tog .3s 11.6s both"></i></div></div>
+  <div class="act" style="animation:in .5s 11.8s both"><span class="n">3</span><div>Promote the lemon tart<small>12 units expire in 3 days</small></div><div class="sw" style="animation:togbg .3s 12.8s both"><i style="animation:tog .3s 12.8s both"></i></div></div>
+ </div>
+ <div class="note">Product illustration. Example data.</div>
+</div>
+
+<!-- S4 14-18 control -->
+<div class="sc" style="animation:fade 4s 14s both">
+ <h1 style="position:absolute;top:280px;left:60px;right:60px;font-size:92px">You decide<br><span class="hlw" style="animation:in .5s 14.3s both">how far it goes</span></h1>
+ <div style="position:absolute;top:720px;left:70px;right:70px">
+  <div class="lv" style="animation:in .4s 14.7s both"><span class="n">1</span><div>Recommend<small>It tells you. You do it.</small></div><div class="sw" style="animation:togbg .3s 15.5s both"><i style="animation:tog .3s 15.5s both"></i></div></div>
+  <div class="lv" style="animation:in .4s 14.9s both"><span class="n">2</span><div>Prepare<small>Ready, one click away.</small></div><div class="sw" style="animation:togbg .3s 16s both"><i style="animation:tog .3s 16s both"></i></div></div>
+  <div class="lv" style="animation:in .4s 15.1s both"><span class="n">3</span><div>Execute with your OK<small>You approve every order.</small></div><div class="sw" style="background:#2A2E2C"><i style="left:6px;background:#555"></i></div></div>
+  <div class="lv" style="animation:in .4s 15.3s both"><span class="n">4</span><div>Decide within limits<small>Suppliers and amounts you set.</small></div><div class="sw" style="background:#2A2E2C"><i style="left:6px;background:#555"></i></div></div>
+ </div>
+</div>
+
+<!-- S5 18-22 CTA -->
+<div class="sc" style="animation:in .6s 18s both">
+ <div style="position:absolute;top:520px;left:390px;width:300px;height:300px"><div class="ring"></div><div class="ring" style="animation-delay:.7s"></div><div class="ring" style="animation-delay:1.4s"></div>
+  <svg style="position:absolute;left:60px;top:60px" width="180" height="180" viewBox="0 0 100 100"><rect x="2" y="2" width="96" height="96" rx="24" fill="#0B0B0B" stroke="#2E3230" stroke-width="2"/><circle cx="47" cy="53" r="27" fill="none" stroke="#fff" stroke-width="13"/><circle cx="70" cy="30" r="12.5" fill="#D9B13B"/></svg></div>
+ <h1 style="position:absolute;top:920px;left:60px;right:60px">Try OneTap<br><span class="hlw" style="animation:in .5s 18.5s both">free</span></h1>
+ <div style="position:absolute;top:1220px;left:0;right:0;text-align:center;font-size:42px;color:#A9ACA6;animation:in .5s 18.9s both">First month free. No card.</div>
+ <div style="position:absolute;top:1360px;left:0;right:0;text-align:center;animation:in .5s 19.3s both"><span style="background:#D6B04A;color:#131615;font-weight:800;font-size:44px;padding:26px 54px;border-radius:99px;letter-spacing:.02em">onetaphq.com</span></div>
+</div>
+</body></html>
