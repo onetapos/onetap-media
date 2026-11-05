@@ -133,9 +133,9 @@ const BIG=[], CH=[]; let flowB=null, chkB=null;
 D.beats.forEach((b,i)=>{
   if(b.type==='big'){ const el=document.createElement('div'); el.className='bigx'; el.innerHTML=b.w.map(w=>`<span class="w">${w}</span>`).join(' '); $('bigs').appendChild(el); BIG.push([b,[...el.querySelectorAll('.w')]]); }
   if(b.type==='chips'){ const pos=[]; const n=b.items.length; b.items.forEach((s,j)=>{ const el=document.createElement('div'); el.className='chip2'; el.textContent=s;
-      const cols=b.few?2:3; const r=Math.floor(j/cols), c=j%cols; const x= b.few? (90+c*470+(r%2)*120) : (40+c*350+((r%2)?110:0)); const y=(b.few?600:600)+r*(b.few?150:112)+((j*37)%40);
+      const cols=b.cols||(b.few?2:3); const r=Math.floor(j/cols), c=j%cols; const x= b.cols==2? (70+c*480+((r%2)?60:0)) : b.few? (90+c*470+(r%2)*120) : (40+c*350+((r%2)?110:0)); const y=600+r*(b.cols==2?92:(b.few?150:112))+(b.cols==2?0:((j*37)%40)); if(b.cols==2){el.style.fontSize='36px';}
       el.style.left=Math.min(x,1080-420)+'px'; el.style.top=y+'px'; $('chipz').appendChild(el); pos.push(el); }); CH.push([b,pos]); }
-  if(b.type==='flow'){ flowB=b; $('flow').innerHTML=`<div class="cap">${b.cap}</div>`+b.items.map(s=>`<div class="it"><i></i>${s}</div>`).join(''); }
+  if(b.type==='flow'){ flowB=b; if(b.top) $('flow').style.top=b.top+'px'; $('flow').innerHTML=`<div class="cap">${b.cap}</div>`+b.items.map(s=>`<div class="it"><i></i>${s}</div>`).join(''); }
   if(b.type==='checks'){ chkB=b; $('checks').innerHTML=`<div class="hd"><div class="logo"></div>OneTap</div>`+b.items.map(s=>`<div class="r"><b>✓</b>${s}</div>`).join(''); }
 });
 $('endCta').innerHTML=`<div class="l1">${D.endl}</div><div class="btn">${D.lang=='es'?'Primer mes gratis':'First month free'}</div><div style="margin-top:28px;font-size:34px;color:#9A9B98">${D.lang=='es'?'Sin tarjeta · onetaphq.com':'No card required · onetaphq.com'}</div>`;
