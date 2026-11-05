@@ -1,0 +1,16 @@
+ov_es/
+ov_en/
+src/
+dbg_*.mp4
+chk_*.png
+c[0-9].jpg
+m[0-9].jpg
+m0.png
+f675*.jpg
+qc*.jpg
+snap_*.png
+sheet_*.png
+seq*.png
+t675.jpg
+*.log
+chk.jpg

@@ -1,0 +1,277 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1920px; background: transparent; overflow: hidden; font-family: 'Inter', sans-serif; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+  .abs { position: absolute; }
+  .gold { color: #D4AF37; }
+  /* hook */
+  #hook { left: 70px; right: 70px; top: 250px; text-align: left; }
+  #hook .w { display: inline-block; font-weight: 900; font-size: 128px; line-height: 1.02; letter-spacing: -3px; color: #fff; margin-right: 26px; text-shadow: 0 6px 40px rgba(0,0,0,.55); opacity: 0; }
+  #hookShade, #topShade { left: 0; right: 0; top: 0; height: 900px; background: linear-gradient(180deg, rgba(10,12,11,.82), rgba(10,12,11,0)); opacity: 0; }
+  #botShade { left: 0; right: 0; bottom: 0; height: 760px; background: linear-gradient(0deg, rgba(10,12,11,.85), rgba(10,12,11,0)); }
+  /* cost tags */
+  .tag { background: rgba(19,22,21,.86); border: 2px solid #D4AF37; color: #fff; border-radius: 22px; padding: 18px 26px; font-size: 34px; font-weight: 600; white-space: nowrap; backdrop-filter: blur(8px); opacity: 0; box-shadow: 0 12px 40px rgba(0,0,0,.45); }
+  .tag b { color: #D4AF37; margin-left: 14px; }
+  .tag .dot { display:inline-block; width: 14px; height: 14px; border-radius: 50%; background:#D4AF37; margin-right: 14px; vertical-align: middle; }
+  #costCard { left: 90px; right: 90px; top: 1350px; background: rgba(19,22,21,.92); border-radius: 34px; border: 2px solid rgba(212,175,55,.6); padding: 34px 40px; color: #fff; opacity: 0; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+  #costCard .row { display: flex; justify-content: space-between; font-size: 40px; padding: 8px 0; }
+  #costCard .row.m { border-top: 2px solid rgba(255,255,255,.15); margin-top: 10px; padding-top: 18px; font-size: 50px; font-weight: 800; }
+  #costCard .lbl { color: #9A9B98; font-weight: 500; }
+  .illus { font-size: 24px; color: rgba(255,255,255,.75); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+  /* big lines */
+  .big { left: 70px; right: 70px; font-weight: 900; font-size: 112px; line-height: 1.02; letter-spacing: -3px; color: #fff; text-shadow: 0 6px 40px rgba(0,0,0,.6); }
+  .big .w { display:inline-block; margin-right: 24px; opacity: 0; }
+  /* subtitles */
+  #subs { left: 60px; right: 60px; top: 1500px; text-align: center; }
+  #subs .w { display: inline-block; font-weight: 800; font-size: 62px; line-height: 1.18; color: #fff; margin: 0 9px; text-shadow: 0 4px 22px rgba(0,0,0,.85), 0 0 3px rgba(0,0,0,.9); }
+  #subs .w.on { color: #D4AF37; transform: scale(1.06); }
+  /* UI section */
+  #ui { left: 0; top: 0; width: 1080px; height: 1920px; background: radial-gradient(120% 80% at 50% 35%, #232826 0%, #131615 60%, #0c0e0d 100%); opacity: 0; overflow: hidden; }
+  #ui .glow { position:absolute; width: 900px; height: 900px; left: 90px; top: 380px; border-radius: 50%; background: radial-gradient(circle, rgba(212,175,55,.22), rgba(212,175,55,0) 65%); }
+  #uiTitle { left: 70px; right: 70px; top: 150px; color:#fff; font-size: 78px; font-weight: 900; letter-spacing: -2px; line-height: 1.04; }
+  #uiTitle .k { display:block; font-size: 28px; letter-spacing: 6px; color:#D4AF37; font-weight: 700; margin-bottom: 18px; }
+  #persp { left: 0; top: 0; width: 1080px; height: 1920px; perspective: 2400px; }
+  #phone { position:absolute; left: 250px; top: 470px; width: 580px; height: 1180px; border-radius: 82px; background: #0a0a0a; border: 14px solid #2b2f2d; box-shadow: 0 60px 120px rgba(0,0,0,.65), inset 0 0 0 3px #3a3f3c; transform-style: preserve-3d; }
+  #notch { position:absolute; left: 50%; top: 18px; width: 150px; height: 38px; margin-left: -75px; background:#000; border-radius: 20px; z-index: 5; }
+  #screen { position:absolute; inset: 0; border-radius: 68px; overflow: hidden; background: #F0EDE3; }
+  .scr { position:absolute; left:0; top:0; width: 425px; height: 900px; padding: 66px 26px 24px; opacity: 0; zoom: 1.3; }
+  .scr h4 { font-size: 30px; font-weight: 800; color: #131615; margin-bottom: 4px; }
+  .scr .sub { font-size: 20px; color: #6d6e6b; margin-bottom: 22px; }
+  .appbar { display:flex; align-items:center; gap: 12px; margin-bottom: 26px; }
+  .logo { width: 44px; height: 44px; border-radius: 12px; background:#131615; position: relative; }
+  .logo:before { content:''; position:absolute; left: 10px; top: 10px; width: 24px; height: 24px; border-radius: 50%; border: 5px solid #fff; box-sizing: border-box; }
+  .logo:after { content:''; position:absolute; right: 6px; top: 6px; width: 9px; height: 9px; border-radius: 50%; background:#D4AF37; }
+  .appbar span { font-weight: 800; font-size: 26px; color:#131615; }
+  /* menu paper */
+  .paper { background:#fff; border-radius: 18px; padding: 30px 30px; box-shadow: 0 10px 30px rgba(0,0,0,.12); position: relative; overflow: hidden; }
+  .paper .t { font-family: 'DejaVu Serif', serif; font-size: 30px; text-align:center; letter-spacing: 6px; margin-bottom: 18px; color:#222; }
+  .paper .it { display:flex; justify-content: space-between; font-family: 'DejaVu Serif', serif; font-size: 21px; color:#333; padding: 9px 0; border-bottom: 1px dashed #ddd; }
+  .scan { position:absolute; left:0; right:0; height: 6px; background: #D4AF37; box-shadow: 0 0 30px 10px rgba(212,175,55,.55); top: 0; }
+  .pill { display:inline-block; margin-top: 22px; background:#131615; color:#fff; border-radius: 40px; padding: 14px 22px; font-size: 21px; font-weight: 700; opacity: 0; }
+  .pill b { color:#D4AF37; }
+  /* dish rows */
+  .dish { background:#fff; border-radius: 20px; padding: 18px 20px; margin-bottom: 14px; box-shadow: 0 6px 18px rgba(0,0,0,.07); opacity: 0; }
+  .dish .n { font-size: 23px; font-weight: 800; color:#131615; margin-bottom: 10px; }
+  .dish .g { display:flex; justify-content: space-between; font-size: 18px; color:#6d6e6b; }
+  .dish .g div b { display:block; font-size: 25px; color:#131615; margin-top: 2px; font-variant-numeric: tabular-nums; }
+  .dish .g div.mg b { color: #1d7a46; }
+  .dish.hl { outline: 4px solid #D4AF37; }
+  /* invoice */
+  .inv { background:#fff; border-radius: 20px; padding: 24px; box-shadow: 0 6px 18px rgba(0,0,0,.08); margin-bottom: 18px; }
+  .inv .row { display:flex; justify-content: space-between; font-size: 20px; padding: 8px 0; color:#333; border-bottom: 1px solid #eee; }
+  .inv .row.up { color:#b3261e; font-weight: 800; }
+  .chg { display:flex; justify-content: space-between; align-items:center; background:#131615; color:#fff; border-radius: 18px; padding: 18px 20px; font-size: 21px; margin-bottom: 12px; opacity: 0; }
+  .chg b { color:#D4AF37; font-size: 25px; }
+  /* kds */
+  #s4 { background:#131615; }
+  #s4 h4 { color:#fff; } #s4 .sub { color:#9A9B98; } #s4 .appbar span { color:#fff; }
+  #s4 .logo { background:#000; border: 2px solid #333; }
+  .tk { background:#1f2422; border-radius: 18px; padding: 18px; margin-bottom: 14px; color:#fff; border-left: 8px solid #D4AF37; opacity: 0; }
+  .tk .h { display:flex; justify-content: space-between; font-weight: 800; font-size: 23px; margin-bottom: 8px; }
+  .tk .h span { color:#D4AF37; font-variant-numeric: tabular-nums; }
+  .tk .l { font-size: 20px; color:#d9d9d6; padding: 3px 0; }
+  /* floating cards */
+  .fc { position:absolute; background: rgba(19,22,21,.94); color:#fff; border: 2px solid #D4AF37; border-radius: 26px; padding: 22px 28px; font-size: 32px; font-weight: 700; box-shadow: 0 24px 60px rgba(0,0,0,.55); opacity: 0; white-space: nowrap; }
+  .fc small { display:block; font-size: 22px; color:#D4AF37; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; font-weight: 700; }
+  #uiIllus { left: 0; right: 0; bottom: 70px; text-align:center; }
+  /* briefing card (morning) */
+  #brief { left: 110px; right: 110px; top: 1000px; background: rgba(240,237,227,.96); border-radius: 36px; padding: 36px 40px; box-shadow: 0 30px 80px rgba(0,0,0,.45); opacity: 0; color:#131615; }
+  #brief .hd { display:flex; align-items:center; gap: 16px; margin-bottom: 20px; }
+  #brief .hd .logo { width: 56px; height: 56px; }
+  #brief .hd .logo:before { left: 13px; top: 13px; width: 30px; height: 30px; border-width: 6px; }
+  #brief .hd div b { display:block; font-size: 34px; }
+  #brief .hd div span { font-size: 24px; color:#6d6e6b; }
+  #brief .a { display:flex; gap: 18px; align-items: flex-start; font-size: 31px; padding: 14px 0; border-top: 1px solid rgba(0,0,0,.1); opacity: 0; }
+  #brief .a i { font-style: normal; flex: 0 0 48px; height: 48px; border-radius: 50%; background:#131615; color:#D4AF37; font-weight: 800; display:flex; align-items:center; justify-content:center; font-size: 26px; }
+  #brief .illus { color:#6d6e6b; margin-top: 10px; font-size: 20px; }
+  /* end card */
+  #end { left:0; top:0; width:1080px; height:1920px; background:#131615; opacity: 0; }
+  #endLogo { position:absolute; left: 50%; top: 610px; width: 230px; height: 230px; margin-left: -115px; }
+  #endWord { position:absolute; left:0; right:0; top: 880px; text-align:center; color:#fff; font-size: 92px; font-weight: 800; letter-spacing: -2px; opacity: 0; }
+  #endTag { position:absolute; left:0; right:0; top: 1010px; text-align:center; color:#D4AF37; font-size: 30px; letter-spacing: 8px; font-weight: 700; opacity: 0; }
+  #endCta { position:absolute; left: 140px; right: 140px; top: 1180px; text-align:center; color:#fff; opacity: 0; }
+  #endCta .l1 { font-size: 54px; font-weight: 800; line-height: 1.12; }
+  #endCta .btn { display:inline-block; margin-top: 44px; background:#D4AF37; color:#131615; font-weight: 900; font-size: 50px; border-radius: 60px; padding: 26px 64px; }
+  .pt { position:absolute; width: 8px; height: 8px; border-radius: 50%; background:#D4AF37; opacity: 0; }
+</style></head>
+<body><div id="stage">
+  <div id="botShade" class="abs"></div>
+  <div id="hookShade" class="abs"></div>
+  <div id="hook" class="abs"></div>
+  <div id="tags"></div>
+  <div id="costCard" class="abs"></div>
+  <div id="big1" class="abs big" style="top:260px"></div>
+  <div id="big2" class="abs big" style="top:260px"></div>
+  <div id="brief" class="abs"></div>
+
+  <div id="ui" class="abs">
+    <div class="glow"></div>
+    <div id="uiTitle" class="abs"></div>
+    <div id="persp" class="abs">
+      <div id="phone"><div id="notch"></div><div id="screen">
+        <div class="scr" id="s1"></div>
+        <div class="scr" id="s2"></div>
+        <div class="scr" id="s3"></div>
+        <div class="scr" id="s4"></div>
+      </div></div>
+    </div>
+    <div class="fc" id="fc1"></div><div class="fc" id="fc2"></div><div class="fc" id="fc3"></div><div class="fc" id="fc4"></div>
+    <div id="uiIllus" class="abs illus"></div>
+  </div>
+
+  <div id="end" class="abs">
+    <svg id="endLogo" viewBox="0 0 230 230">
+      <rect id="lgSq" x="5" y="5" width="220" height="220" rx="52" fill="#000" stroke="#2b2f2d" stroke-width="4"/>
+      <circle id="lgRing" cx="115" cy="115" r="56" fill="none" stroke="#fff" stroke-width="22" stroke-linecap="round" stroke-dasharray="352" stroke-dashoffset="352" transform="rotate(-90 115 115)"/>
+      <circle id="lgDot" cx="182" cy="48" r="17" fill="#D4AF37"/>
+    </svg>
+    <div id="endWord">OneTap</div>
+    <div id="endTag">BUSINESS, CONNECTED.</div>
+    <div id="endCta"></div>
+    <div id="pts"></div>
+  </div>
+
+  <div id="subs" class="abs"></div>
+</div>
+<script>
+const P = new URLSearchParams(location.search);
+const LANG = P.get('lang') || 'es';
+// timeline (seconds), overridable via ?tl=json
+const TL = Object.assign({
+  k1: 0.2, kitEnd: 3.2, p1: 3.4, p1e: 5.0, p2: 5.6, heroEnd: 9.0, nightEnd: 18.6, uiEnd: 27.8, mornEnd: 31.8, total: 35.0
+}, P.get('tl') ? JSON.parse(P.get('tl')) : {});
+const SEGS = P.get('segs') ? JSON.parse(P.get('segs')) : null; // [[start,end,text],...]
+
+const T = {
+ es: {
+  hook: ['¿Cuánto','te','deja','este','<span class="gold">plato?</span>'],
+  tags: [['Ribeye 300 g','$7.20',540,660],['Tomillo y sal','$0.30',70,820],['Salsa de vino','$0.65',590,1090],['Puré de papa','$0.55',60,1210]],
+  cost: ['Costo del plato','$8.70','Precio en carta','$24.00','Te deja','$15.30 · 64%'],
+  illus: 'Ejemplo ilustrativo',
+  big1: ['Restaurante','lleno','no','siempre','es','<span class="gold">rentable.</span>'],
+  big2: ['El','cierre','a','mano','te','roba','la','<span class="gold">noche.</span>'],
+  uiK: 'ONETAP · COSTO REAL', uiT: 'De tu carta a tu margen,<br>sin hacerlo a mano.',
+  s1: {h:'Sube tu carta', s:'PDF o foto', menu:'CARTA', items:[['Ribeye con puré','$24'],['Corvina a la parrilla','$19'],['Pasta al pesto','$14'],['Ensalada de la casa','$9'],['Tres leches','$6']], pill:'<b>24 platos</b> creados con ingredientes'},
+  s2: {h:'Tus platos', s:'Costo y margen real', c:'Costo', p:'Precio', m:'Margen',
+       d:[['Ribeye con puré',8.70,24,64],['Corvina a la parrilla',6.10,19,68],['Pasta al pesto',3.40,14,76],['Ensalada de la casa',2.10,9,77],['Tres leches',1.30,6,78]]},
+  s3: {h:'Factura del proveedor', s:'Leída en segundos', rows:[['Ribeye, kg','$24.00 → $25.90'],['Papa, kg','$1.20'],['Vino tinto','$9.50']], ch:['Ribeye con puré', 'Costo $8.70 → $9.27', 'Margen 64% → 61%']},
+  s4: {h:'Pantalla de cocina', s:'Órdenes en vivo', tk:[['Mesa 4','02:14',['2 × Ribeye con puré','1 × Pasta al pesto']],['Mesa 9','00:48',['1 × Corvina a la parrilla','2 × Tres leches']],['Para llevar','00:12',['3 × Pasta al pesto']]]},
+  fc: [['Paso 1','Sube tu carta'],['Costo real','Por cada plato'],['Se actualiza','Con cada factura'],['Directo','A la cocina']],
+  brief: {t:'Briefing de hoy', s:'7:00 a. m. · 3 acciones', a:['Sube el ribeye a $25 para cuidar tu margen','Haz el pedido de pescado antes del jueves','Destaca el tres leches: tu plato con más margen']},
+  end: {l1:'Sube tu carta.<br>Mira tu costo real.', btn:'Primer mes gratis', sub:'Sin tarjeta · onetaphq.com'},
+  segs: [[0.3,2.4,'¿Cuánto te deja este plato?'],[3.0,5.6,'Si no lo sabes al centavo, no eres el único.'],[9.2,12.2,'Restaurante lleno no siempre es restaurante rentable.'],[14.8,17.4,'Y el cierre a mano te roba la noche.'],[18.8,20.4,'Sube tu carta a OneTap.'],[20.5,26.4,'Calcula el costo real de cada plato y lo actualiza con cada factura del proveedor.'],[28.0,31.0,'Y cada mañana te da tres acciones para cuidar tu margen.']]
+ },
+ en: {
+  hook: ['What','does','this','<span class="gold">plate</span>','really','make','you?'],
+  tags: [['Ribeye 10 oz','$7.20',540,660],['Thyme and salt','$0.30',70,820],['Red wine sauce','$0.65',560,1090],['Mashed potatoes','$0.55',60,1210]],
+  cost: ['Plate cost','$8.70','Menu price','$24.00','You keep','$15.30 · 64%'],
+  illus: 'Illustrative example',
+  big1: ['A','full','restaurant','isn\'t','always','a','<span class="gold">profitable</span>','one.'],
+  big2: ['Closing','out','by','hand','steals','your','<span class="gold">nights.</span>'],
+  uiK: 'ONETAP · REAL FOOD COST', uiT: 'From menu to margin,<br>no spreadsheets.',
+  s1: {h:'Upload your menu', s:'PDF or photo', menu:'MENU', items:[['Ribeye & mash','$24'],['Grilled sea bass','$19'],['Pesto pasta','$14'],['House salad','$9'],['Tres leches cake','$6']], pill:'<b>24 dishes</b> built with ingredients'},
+  s2: {h:'Your dishes', s:'Real cost and margin', c:'Cost', p:'Price', m:'Margin',
+       d:[['Ribeye & mash',8.70,24,64],['Grilled sea bass',6.10,19,68],['Pesto pasta',3.40,14,76],['House salad',2.10,9,77],['Tres leches cake',1.30,6,78]]},
+  s3: {h:'Supplier invoice', s:'Read in seconds', rows:[['Ribeye, lb','$10.90 → $11.75'],['Potatoes, lb','$0.55'],['Red wine','$9.50']], ch:['Ribeye & mash','Cost $8.70 → $9.27','Margin 64% → 61%']},
+  s4: {h:'Kitchen display', s:'Live orders', tk:[['Table 4','02:14',['2 × Ribeye & mash','1 × Pesto pasta']],['Table 9','00:48',['1 × Grilled sea bass','2 × Tres leches cake']],['To go','00:12',['3 × Pesto pasta']]]},
+  fc: [['Step 1','Upload your menu'],['Real cost','For every dish'],['Always current','With every invoice'],['Straight','To the kitchen']],
+  brief: {t:'Today\'s briefing', s:'7:00 a.m. · 3 actions', a:['Raise the ribeye to $25 to protect your margin','Place your fish order before Thursday','Feature the tres leches: your top-margin dish']},
+  end: {l1:'Upload your menu.<br>See your real cost.', btn:'First month free', sub:'No card required · onetaphq.com'},
+  segs: [[0.3,2.4,'What does this plate really make you?'],[3.0,5.6,'If you don\'t know it to the cent, you\'re not alone.'],[9.2,12.2,'A full restaurant isn\'t always a profitable one.'],[14.8,17.4,'And closing out by hand steals your nights.'],[18.8,20.4,'Upload your menu to OneTap.'],[20.5,26.4,'It calculates the real cost of every dish, and updates it with every supplier invoice.'],[28.0,31.0,'And every morning, it gives you three actions to protect your margin.']]
+ }
+}[LANG];
+const segs = SEGS || T.segs;
+const $ = id => document.getElementById(id);
+const words = (el, arr) => { el.innerHTML = arr.map(w => `<span class="w">${w}</span>`).join(' '); return [...el.querySelectorAll('.w')]; };
+const hookW = words($('hook'), T.hook);
+const big1W = words($('big1'), T.big1);
+const big2W = words($('big2'), T.big2);
+$('tags').innerHTML = T.tags.map((t,i)=>`<div class="tag abs" id="tg${i}" style="left:${t[2]}px;top:${t[3]}px"><span class="dot"></span>${t[0]}<b>${t[1]}</b></div>`).join('');
+$('costCard').innerHTML = `<div class="row"><span class="lbl">${T.cost[0]}</span><span>${T.cost[1]}</span></div><div class="row"><span class="lbl">${T.cost[2]}</span><span>${T.cost[3]}</span></div><div class="row m"><span>${T.cost[4]}</span><span class="gold">${T.cost[5]}</span></div><div class="illus" style="margin-top:12px">${T.illus}</div>`;
+$('uiTitle').innerHTML = `<span class="k">${T.uiK}</span>${T.uiT}`;
+const bar = `<div class="appbar"><div class="logo"></div><span>OneTap</span></div>`;
+$('s1').innerHTML = bar + `<h4>${T.s1.h}</h4><div class="sub">${T.s1.s}</div><div class="paper"><div class="t">${T.s1.menu}</div>${T.s1.items.map(i=>`<div class="it"><span>${i[0]}</span><span>${i[1]}</span></div>`).join('')}<div class="scan" id="scan"></div></div><div class="pill" id="pill1">✓ ${T.s1.pill}</div>`;
+$('s2').innerHTML = bar + `<h4>${T.s2.h}</h4><div class="sub">${T.s2.s}</div>` + T.s2.d.map((d,i)=>`<div class="dish${i==0?' hl':''}" id="d${i}"><div class="n">${d[0]}</div><div class="g"><div>${T.s2.c}<b id="dc${i}">$0.00</b></div><div>${T.s2.p}<b>$${d[2].toFixed(2)}</b></div><div class="mg">${T.s2.m}<b id="dm${i}">0%</b></div></div></div>`).join('');
+$('s3').innerHTML = bar + `<h4>${T.s3.h}</h4><div class="sub">${T.s3.s}</div><div class="inv">${T.s3.rows.map((r,i)=>`<div class="row${i==0?' up':''}"><span>${r[0]}</span><span>${r[1]}</span></div>`).join('')}</div><div class="chg" id="ch0"><span>${T.s3.ch[0]}</span></div><div class="chg" id="ch1"><span>${T.s3.ch[1].split(' ')[0]}</span><b>${T.s3.ch[1].split(' ').slice(1).join(' ')}</b></div><div class="chg" id="ch2"><span>${T.s3.ch[2].split(' ')[0]}</span><b>${T.s3.ch[2].split(' ').slice(1).join(' ')}</b></div>`;
+$('s4').innerHTML = bar + `<h4>${T.s4.h}</h4><div class="sub">${T.s4.s}</div>` + T.s4.tk.map((k,i)=>`<div class="tk" id="tk${i}"><div class="h">${k[0]}<span>${k[1]}</span></div>${k[2].map(l=>`<div class="l">${l}</div>`).join('')}</div>`).join('');
+const fcPos = [[60,560],[610,390],[40,1160],[620,1420]];
+T.fc.forEach((f,i)=>{ const e=$('fc'+(i+1)); e.innerHTML=`<small>${f[0]}</small>${f[1]}`; e.style.left=fcPos[i][0]+'px'; e.style.top=fcPos[i][1]+'px'; });
+$('uiIllus').textContent = T.illus;
+$('brief').innerHTML = `<div class="hd"><div class="logo"></div><div><b>${T.brief.t}</b><span>${T.brief.s}</span></div></div>` + T.brief.a.map((a,i)=>`<div class="a" id="ba${i}"><i>${i+1}</i><span>${a}</span></div>`).join('') + `<div class="illus">${T.illus}</div>`;
+$('endCta').innerHTML = `<div class="l1">${T.end.l1}</div><div class="btn">${T.end.btn}</div><div style="margin-top:28px;font-size:34px;color:#9A9B98">${T.end.sub}</div>`;
+let ph=''; for (let i=0;i<40;i++){ ph+=`<div class="pt" id="pt${i}"></div>`; } $('pts').innerHTML=ph;
+
+// subtitles: chunk into groups of <= 4 words
+const chunks = [];
+segs.forEach(([a,b,txt]) => {
+  const ws = txt.split(' '); const total = ws.reduce((s,w)=>s+w.length+1,0);
+  let t = a; const per = (b-a)/total; const wt = ws.map(w => { const s=t; t += (w.length+1)*per; return [w,s,t]; });
+  for (let i=0;i<wt.length;i+=4){ const g = wt.slice(i,i+4); if (i+4 < wt.length && wt.length-(i+4) === 1) { g.push(wt[i+4]); i++; } chunks.push(g); }
+});
+
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const lin=(t,a,b)=>clamp((t-a)/(b-a));
+const eo=x=>1-Math.pow(1-x,3);
+const back=x=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2);};
+function fadeWin(t,a,b,fi=.35,fo=.35){ return Math.min(eo(lin(t,a,a+fi)), 1-lin(t,b-fo,b)); }
+function wordsIn(ws,t,a,step,out){ ws.forEach((w,i)=>{ const s=a+i*step; const k=back(lin(t,s,s+.35)); const o=out?1-lin(t,out-.3,out):1; w.style.opacity=clamp(lin(t,s,s+.2))*o; w.style.transform=`translateY(${(1-k)*60}px) scale(${.85+.15*k})`; }); }
+
+window.seek = function(t){
+  const ui = t>=TL.nightEnd && t<TL.uiEnd, end = t>=TL.mornEnd;
+  // shades for readability on live action
+  $('botShade').style.opacity = (ui||end)?0:1;
+  $('hookShade').style.opacity = Math.min(1, fadeWin(t,0,TL.kitEnd,.01,.2) + fadeWin(t,TL.kitEnd,TL.heroEnd,.2,.4) + fadeWin(t,TL.heroEnd,TL.nightEnd,.2,.3)*0.9);
+  // hook
+  wordsIn(hookW,t,TL.p1,Math.min(0.22,(TL.p1e-TL.p1)/hookW.length),TL.heroEnd-0.2);
+  // cost tags
+  T.tags.forEach((g,i)=>{ const e=$('tg'+i); const s=TL.p2+0.15+i*0.4; const k=back(lin(t,s,s+.4)); e.style.opacity=clamp(lin(t,s,s+.2))*(1-lin(t,TL.heroEnd-.4,TL.heroEnd)); e.style.transform=`scale(${.6+.4*k}) translateY(${Math.sin((t-s)*1.6)*6}px)`; });
+  { const s=TL.p2+1.9; const k=back(lin(t,s,s+.5)); const e=$('costCard'); e.style.opacity=clamp(lin(t,s,s+.25))*(1-lin(t,TL.heroEnd-.4,TL.heroEnd)); e.style.transform=`translateY(${(1-k)*80}px)`; }
+  // big lines
+  wordsIn(big1W,t,TL.k1,0.13,TL.kitEnd);
+  wordsIn(big2W,t,TL.heroEnd+0.2,0.14,TL.nightEnd);
+  // UI
+  const u0=TL.nightEnd, ud=TL.uiEnd-TL.nightEnd;
+  $('ui').style.opacity = ui ? Math.min(1,lin(t,u0,u0+.25)*1) : 0;
+  if (ui) {
+    const lt=t-u0;
+    $('uiTitle').style.opacity = eo(lin(lt,.1,.5)); $('uiTitle').style.transform=`translateY(${(1-eo(lin(lt,.1,.6)))*40}px)`;
+    const ry = -16 + 10*Math.sin(lt*0.45), rx = 6 - 3*Math.cos(lt*0.5);
+    const ent = eo(lin(lt,0,.7));
+    $('phone').style.transform = `translateY(${(1-ent)*500 + Math.sin(lt*1.1)*10}px) rotateY(${ry}deg) rotateX(${rx}deg) scale(${.96+.04*ent})`;
+    const q = ud/4; // four screens
+    ['s1','s2','s3','s4'].forEach((id,i)=>{ const a=i*q, b=(i+1)*q; const e=$(id); const o = i==3 ? eo(lin(lt,a,a+.3)) : (i==0? 1-lin(lt,b-.15,b+.15) : Math.min(eo(lin(lt,a-.15,a+.15)),1-lin(lt,b-.15,b+.15))); e.style.opacity = i==0? Math.min(1, o) : o; e.style.clipPath = i==0?'none':`circle(${eo(lin(lt,a-.15,a+.35))*150}% at 80% 10%)`; });
+    // s1 scan + pill
+    $('scan').style.top = (lin(lt,.3,q-.5)*430)+'px'; $('pill1').style.opacity = eo(lin(lt,q-.6,q-.3)); $('pill1').style.transform=`scale(${.8+.2*back(lin(lt,q-.6,q-.2))})`;
+    // s2 counting
+    T.s2.d.forEach((d,i)=>{ const s=q+.15+i*.18; const k=eo(lin(lt,s,s+.9)); $('d'+i).style.opacity=eo(lin(lt,s,s+.25)); $('d'+i).style.transform=`translateX(${(1-eo(lin(lt,s,s+.4)))*80}px)`; $('dc'+i).textContent='$'+(d[1]*k).toFixed(2); $('dm'+i).textContent=Math.round(d[3]*k)+'%'; });
+    // s3 changes
+    [0,1,2].forEach(i=>{ const s=2*q+.4+i*.35; $('ch'+i).style.opacity=eo(lin(lt,s,s+.25)); $('ch'+i).style.transform=`translateY(${(1-back(lin(lt,s,s+.4)))*40}px)`; });
+    // s4 tickets
+    [0,1,2].forEach(i=>{ const s=3*q+.2+i*.3; $('tk'+i).style.opacity=eo(lin(lt,s,s+.25)); $('tk'+i).style.transform=`translateY(${(1-back(lin(lt,s,s+.4)))*-50}px)`; });
+    // floating cards
+    [1,2,3,4].forEach(i=>{ const a=(i-1)*q+.25, b=i*q; const e=$('fc'+i); e.style.opacity=Math.min(eo(lin(lt,a,a+.3)),1-lin(lt,b-.1,b+.15)); e.style.transform=`translateY(${Math.sin(lt*1.4+i)*10}px) scale(${.8+.2*back(lin(lt,a,a+.4))})`; });
+    $('uiIllus').style.opacity = 0.9;
+  }
+  // briefing (morning)
+  { const a=TL.uiEnd+0.5, b=TL.mornEnd; const e=$('brief'); e.style.opacity=fadeWin(t,a,b,.35,.3); e.style.transform=`translateY(${(1-back(lin(t,a,a+.5)))*120}px)`;
+    [0,1,2].forEach(i=>{ const s=a+.5+i*.45; $('ba'+i).style.opacity=eo(lin(t,s,s+.3)); $('ba'+i).style.transform=`translateX(${(1-eo(lin(t,s,s+.4)))*60}px)`; }); }
+  // end card
+  $('end').style.opacity = end ? eo(lin(t,TL.mornEnd,TL.mornEnd+.3)) : 0;
+  if (end) { const lt=t-TL.mornEnd;
+    $('lgRing').setAttribute('stroke-dashoffset', 352*(1-eo(lin(lt,.15,.9))));
+    $('lgDot').style.transform=`scale(${back(lin(lt,.8,1.1))})`; $('lgDot').style.transformOrigin='182px 48px';
+    $('endLogo').style.transform=`scale(${.9+.1*eo(lin(lt,0,.6))})`;
+    $('endWord').style.opacity=eo(lin(lt,.6,.9)); $('endTag').style.opacity=eo(lin(lt,.8,1.1));
+    $('endCta').style.opacity=eo(lin(lt,1.0,1.4)); $('endCta').style.transform=`translateY(${(1-eo(lin(lt,1.0,1.5)))*40}px)`;
+    for (let i=0;i<40;i++){ const e=$('pt'+i); const ang=i*2.4, r=60+((i*37)%180), s=.7+(i%7)*.05; const k=lin(lt,s,s+1.4); e.style.opacity=(k>0&&k<1)?(1-k):0; e.style.left=(540+Math.cos(ang)*(r+k*260))+'px'; e.style.top=(725+Math.sin(ang)*(r+k*260))+'px'; }
+  }
+  // subtitles
+  const bigOn = (t<TL.p2-0.1) || (t>=TL.heroEnd && t<TL.nightEnd);
+  const sub=$('subs'); const ch = bigOn ? null : chunks.find(g => t>=g[0][1]-0.05 && t<g[g.length-1][2]+0.25);
+  if (ch && !end) { sub.style.top = ui ? '1700px' : (t>=TL.kitEnd && t<TL.heroEnd ? '1700px' : '1500px'); sub.innerHTML = ch.map(([w,a,b])=>`<span class="w${t>=a&&t<b+0.05?' on':''}">${w}</span>`).join(''); } else sub.innerHTML='';
+};
+window.seek(0);
+</script>
+</body></html>
