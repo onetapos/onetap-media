@@ -1,17 +1,18 @@
 import json, subprocess, sys
+K="/mnt/user-data/uploads/Downloads/OneTap anuncios/higgs/kevin/"
 H="/mnt/user-data/uploads/Downloads/OneTap anuncios/higgs/"
 CFG={
- 'es': dict(f=H+"hf_20261105_010509_6df7ab0a-bcb3-414a-8a6c-a9847c988e69.mp3",
-  ph=[(1.108,2.522),(3.655,6.479),(7.352,10.414),(11.229,13.565),(14.684,16.460),(17.063,21.651),(22.550,25.681),(26.669,28.559),(29.403,31.634)],
+ 'es': dict(f=K+"hf_20261105_014325_2ff9399b-4b5f-4469-bab1-e2cdf5f9154e.mp3",
+  ph=[(3.67,4.85),(5.27,7.85),(0.0,3.22),(8.30,10.26),(10.77,12.35),(12.60,17.00),(17.43,20.44),(20.81,22.46),(22.81,24.76)],
   tx=['¿Cuánto te deja este plato?','Si no lo sabes al centavo, no eres el único.','Restaurante lleno no siempre es restaurante rentable.','Y el cierre a mano te roba la noche.','Sube tu carta a OneTap.','Calcula el costo real de cada plato y lo actualiza con cada factura del proveedor.','Y cada mañana te da tres acciones para cuidar tu margen.','Primer mes gratis, sin tarjeta.','onetaphq.com']),
- 'en': dict(f=H+"hf_20261105_010521_2c2db826-35b9-47b1-a9fd-ba6ced899bbf.mp3",
-  ph=[(0.0,2.446),(4.339,6.852),(7.438,10.306),(11.054,13.787),(14.909,16.523),(17.098,22.606),(23.593,27.383),(28.290,30.839),(32.239,34.429)],
+ 'en': dict(f=K+"hf_20261105_014332_25cadce6-0326-4e15-b05c-df2b33e717e6.mp3",
+  ph=[(3.79,5.22),(5.94,8.10),(0.0,2.94),(8.63,10.82),(11.33,12.69),(13.08,17.69),(18.15,21.32),(21.86,23.96),(24.35,26.04)],
   tx=['What does this plate really make you?','If you don\'t know it to the cent, you\'re not alone.','A full restaurant isn\'t always a profitable one.','And closing out by hand steals your nights.','Upload your menu to OneTap.','It calculates the real cost of every dish, and updates it with every supplier invoice.','And every morning, it gives you three actions to protect your margin.','First month free. No card required.','onetaphq.com']),
 }
 # gap AFTER phrase i
 ORDER=[2,0,1,3,4,5,6,7,8]
-GAP=[0.45,0.5,1.0,0.4,0.25,0.6,0.45,0.35,0]
-LEAD=0.15
+GAP=[0.55,0.45,1.15,0.45,0.25,0.75,0.5,0.35,0]
+LEAD=0.12
 for lang,c in CFG.items():
     t=LEAD; parts=[]; segs=[]; starts=[]
     for i,oi in enumerate(ORDER):

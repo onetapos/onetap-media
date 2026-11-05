@@ -57,14 +57,48 @@ while b*beat<dur:
     elif sec=='end' and at < TL['mornEnd']+beat*0.5:
         add(K,at,1.0)
     b+=1
+
+# --- pluck arpeggio (Karplus-Strong) ---
+def pluck(f,d=0.5,g=0.18):
+    n=int(d*SR); P=max(2,int(SR/f)); buf=rng.uniform(-1,1,P); out=np.zeros(n)
+    for i in range(n):
+        out[i]=buf[i%P]; buf[i%P]=0.5*(buf[i%P]+buf[(i+1)%P])*0.996
+    return lp(out,5000)*g
+cache={}
+def pl(m,d):
+    k=(m,d)
+    if k not in cache: cache[k]=pluck(mid(m),d)
+    return cache[k]
+arp_pat=[0,2,1,3,2,1,3,2]
+b16=beat/4
+i=0
+while i*b16<dur:
+    at=i*b16; seg=int(at//seglen)%4; ch=chords[seg]
+    sec = 'kit' if at<TL['kitEnd'] else 'hero' if at<TL['heroEnd'] else 'night' if at<TL['nightEnd'] else 'ui' if at<TL['uiEnd'] else 'morn' if at<TL['mornEnd'] else 'end'
+    m=ch[arp_pat[i%8]]+12
+    if sec in ('kit','ui','morn'): add(pl(m,0.4),at,1.0,0.25*((-1)**i))
+    elif sec=='hero' and i%2==0: add(pl(m,0.6),at,0.8,0.2*((-1)**i))
+    elif sec=='end' and at<TL['mornEnd']+2*beat and i%2==0: add(pl(m+12,0.9),at,0.7)
+    i+=1
+
 # riser into UI and impact at hero->kit
 def riser(a,b_):
     n0=int(a*SR); n1=int(b_*SR); n=n1-n0; x=hp(rng.standard_normal(n),3000)*np.linspace(0,1,n)**2*0.12; L[n0:n1]+=x; Rr[n0:n1]+=x
 riser(TL['nightEnd']-1.2,TL['nightEnd']); riser(TL['kitEnd']-0.6,TL['kitEnd'])
 for at in (0.0,TL['kitEnd'],TL['nightEnd'],TL['mornEnd']):
     add(K*1.2,at,1.0)
+
+pumpenv=np.ones(N)
+b=0
+while b*beat<dur:
+    at=b*beat
+    if (TL['kitEnd']>at) or (TL['nightEnd']<=at<TL['mornEnd']):
+        n0=int(at*SR); n1=min(N,n0+int(beat*SR)); tt=np.arange(n1-n0)/SR
+        pumpenv[n0:n1]=0.45+0.55*(1-np.exp(-tt*12))
+    b+=1
+
 # master: gentle level shape, night darker via lowpass segment
-mix=np.stack([L,Rr],1)
+mix=np.stack([L,Rr],1)*pumpenv[:,None]
 ns=int(TL['heroEnd']*SR); ne=int(TL['nightEnd']*SR)
 for c in range(2): mix[ns:ne,c]=lp(mix[ns:ne,c],700)
 fade=np.ones(N); fo=int(1.6*SR); fade[-fo:]=np.linspace(1,0,fo); fi=int(0.02*SR); fade[:fi]=np.linspace(0,1,fi)
