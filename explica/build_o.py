@@ -13,8 +13,8 @@ def big(a,b,w,at=None,**kw):
 H=lambda a,b: f'{a}<br><span class="g2">{b}</span>'
 if key=='obusy_en':
     total=44.0; endT=35.9
-    beats=[big(0.15,2.0,['Busy','<span class="neq">≠</span>',G('profitable.')],at=[0.15,0.55,0.95],cls='huge',top=330),
-           big(2.0,2.85,['Is','it','working','for',G('you?')],step=0.1),
+    beats=[big(0.15,2.85,['Busy','<span class="neq">≠</span>',G('profitable.')],at=[0.15,0.55,0.95],cls='huge',top=330),
+           big(1.95,2.85,['Is','it','working','for',G('you?')],step=0.08,cls='sub2',top=760),
            big(2.95,4.95,['Here\'s','what','makes',G('OneTap'),G('different.')],step=0.13),
            dict(type='flash',a=2.95),
            dict(type='ui',a=4.95,b=33.6,nonum=True,steps=[
@@ -26,7 +26,7 @@ if key=='obusy_en':
              dict(t=25.7,scr='margin',h=H('Spot waste.','Protect your margins.')),
              dict(t=29.6,scr='brief',h=H('Know what needs attention.','Your AI morning briefing.'))]),
            big(33.7,endT,['Less',G('admin.'),'More',G('business.')],at=[33.75,33.95,34.6,34.8])]
-    bg=[(r1,0.0,2.95,1.0),(r5,5.4,2.0,1.0),(None,0,28.65,1),(r2,11.0,2.3,1.0)]
+    bg=[(r1,0.0,2.95,1.0),(r5,7.0,2.0,1.0),(None,0,28.65,1),(r2,11.0,2.3,1.0)]; endbg=(r2,5.5)
     endl='Save time.<br>Reduce costs.'
 elif key=='obatt_en':
     total=81.933; endT=71.3
@@ -49,13 +49,13 @@ elif key=='obatt_en':
            big(67.55,endT,['And','finally...','enjoy','that',G('coffee.')],at=[67.6,67.8,69.0,69.2,69.4])]
     beats.append(dict(type='batt',win=[[0.0,39.55],[56.75,endT]],charge=[30.7,33.0],
         k=[[0.0,100],[4.0,100],[10.4,84],[10.6,80],[19.9,36],[20.1,32],[25.4,14],[25.6,11],[28.5,2],[30.7,2],[33.0,100]]))
-    bg=[(r3,0.2,4.0,1.0),(r3,4.2,6.5,1.0),(r1,0.5,9.5,1.0),(r4,0.5,5.5,1.0),(r4,8.5,5.0,1.0),(r5,4.4,3.2,1.0),(r2,3.0,4.0,1.0),(r5,7.7,1.85,1.0),
-        (None,0,17.2,1),(r6,0.0,5.75,1.0),(r2,9.6,5.0,1.0),(r6,7.0,3.8,1.0)]
+    bg=[(r3,0.2,4.0,1.0),(r3,4.2,6.5,1.0),(r1,0.5,9.5,1.0),(r4,0.5,5.5,1.0),(r4,8.5,5.0,1.0),(r2,2.6,3.2,1.0),(r5,6.6,4.0,1.0),(r2,6.0,1.85,1.0),
+        (None,0,17.2,1),(r6,0.0,5.75,1.0),(r2,9.6,5.0,1.0),(r6,7.0,3.8,1.0)]; endbg=(r6,4.0)
     endl='Save time. Save money.<br><span style="font-size:40px;font-weight:600;color:#cfcfcb">Put your energy back into your business.</span>'
 else: raise SystemExit('unknown key')
 s=0.0
 for x in bg: s+=x[2]
 assert abs(s-endT)<0.06,(s,endT)
-bg.append((None,0,round(total-endT,3),1))
+bg.append((endbg[0],endbg[1],round(total-endT,3),1.0,'blur'))
 json.dump(dict(total=total,end=endT,beats=beats,segs=[],bg=bg,endl=endl,lang='en'),open(f'tl_{key}.json','w'),ensure_ascii=False)
 print(key,'ok',total)
