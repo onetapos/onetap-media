@@ -1,0 +1,200 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="base.css">
+<style>
+  /* battery */
+  #batt { position:absolute; left: 70px; top: 120px; display:flex; align-items:center; gap: 18px; opacity: 0; }
+  #batt .body { position:relative; width: 170px; height: 78px; border: 6px solid #fff; border-radius: 18px; padding: 6px; box-shadow: 0 6px 30px rgba(0,0,0,.45); background: rgba(10,12,11,.35); }
+  #batt .cap { position:absolute; right: -18px; top: 22px; width: 10px; height: 22px; background:#fff; border-radius: 0 6px 6px 0; }
+  #batt .lvl { height: 100%; border-radius: 9px; background:#3fbf7f; }
+  #batt .pct { color:#fff; font-weight: 900; font-size: 54px; letter-spacing: -1px; text-shadow: 0 4px 24px rgba(0,0,0,.6); font-variant-numeric: tabular-nums; min-width: 160px; }
+  #batt .bolt { position:absolute; left: 50%; top: 50%; width: 40px; height: 56px; margin: -28px 0 0 -20px; opacity: 0; }
+  .bigx.mid { top: 700px; text-align: center; }
+  .bigx.huge .w { font-size: 168px; letter-spacing: -4px; }
+  .bigx .neq { font-size: 190px; color:#D4AF37; line-height: .8; }
+  /* UI section */
+  #ui2 { position:absolute; left:0; top:0; width:1080px; height:1920px; background: radial-gradient(120% 80% at 50% 38%, #232826 0%, #131615 60%, #0c0e0d 100%); opacity: 0; overflow: hidden; }
+  #ui2 .glow { position:absolute; width: 900px; height: 900px; left: 90px; top: 520px; border-radius: 50%; background: radial-gradient(circle, rgba(212,175,55,.20), rgba(212,175,55,0) 65%); }
+  .stepK { position:absolute; left: 70px; top: 150px; font-size: 30px; letter-spacing: 6px; color:#D4AF37; font-weight: 800; opacity: 0; }
+  .stepK .dots { display:inline-flex; gap: 10px; margin-left: 18px; vertical-align: middle; }
+  .stepK .dots i { width: 46px; height: 8px; border-radius: 4px; background: rgba(255,255,255,.18); display:inline-block; }
+  .stepK .dots i.on { background:#D4AF37; }
+  .stepH { position:absolute; left: 70px; right: 60px; top: 205px; color:#fff; font-size: 68px; font-weight: 900; letter-spacing: -2px; line-height: 1.04; opacity: 0; }
+  .stepH .num, .stepH .g2 { color:#D4AF37; }
+  #persp2 { position:absolute; left:0; top:0; width:1080px; height:1920px; perspective: 2400px; }
+  #phone2 { position:absolute; left: 400px; top: 570px; width: 580px; height: 1180px; border-radius: 82px; background: #0a0a0a; border: 14px solid #2b2f2d; box-shadow: 0 60px 120px rgba(0,0,0,.65), inset 0 0 0 3px #3a3f3c; }
+  #notch2 { position:absolute; left: 50%; top: 18px; width: 150px; height: 38px; margin-left: -75px; background:#000; border-radius: 20px; z-index: 5; }
+  #screen2 { position:absolute; inset: 0; border-radius: 68px; overflow: hidden; background: #F0EDE3; }
+  #screen2 .scr { opacity: 0; }
+  .paper .scan { opacity: 0; }
+  .pill2 { display:flex; align-items:center; gap: 10px; background:#131615; color:#fff; border-radius: 16px; padding: 14px 16px; font-size: 19px; font-weight: 700; margin-top: 12px; }
+  .pill2 b { color:#5fd08a; font-size: 22px; }
+  .scr.dark .bq { background:#1f2422; color:#e8e8e5; border-radius: 16px; padding: 14px 16px; font-size: 19px; line-height: 1.32; margin-bottom: 12px; display:flex; gap: 12px; }
+  .scr.dark .bq i { font-style: normal; flex: 0 0 34px; height: 34px; border-radius: 50%; background:#D4AF37; color:#131615; font-weight: 900; display:flex; align-items:center; justify-content:center; font-size: 18px; }
+  .scr.dark .bq small { display:block; color:#D4AF37; font-weight: 700; font-size: 15px; margin-top: 4px; }
+  .auto { background:#fff; border-radius: 18px; padding: 16px 18px; box-shadow: 0 6px 18px rgba(0,0,0,.07); margin-top: 6px; }
+  .auto .t { font-size: 17px; color:#6d6e6b; font-weight: 700; margin-bottom: 10px; }
+  .auto .row { display:flex; gap: 8px; }
+  .auto .row span { flex: 1; text-align:center; font-size: 14px; font-weight: 800; padding: 9px 4px; border-radius: 10px; background:#efece2; color:#6d6e6b; }
+  .auto .row span.on { background:#131615; color:#D4AF37; }
+  .mg { color:#1d7a46; }
+  .typing { display:inline-flex; gap: 6px; } .typing i { width: 9px; height: 9px; border-radius: 50%; background:#9a9b98; display:inline-block; }
+  #uiIllus2 { position:absolute; left: 0; right: 0; bottom: 120px; text-align:center; opacity: .9; }
+  .fc2 { position:absolute; width: 360px; background: rgba(19,22,21,.94); color:#fff; border: 2px solid #D4AF37; border-radius: 26px; padding: 24px 28px; font-size: 34px; line-height: 1.15; font-weight: 800; box-shadow: 0 24px 60px rgba(0,0,0,.55); opacity: 0; }
+  .fc2 small { display:block; font-size: 22px; color:#D4AF37; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; font-weight: 700; }
+  #flash { position:absolute; inset:0; background: radial-gradient(circle at 50% 45%, rgba(255,230,160,.9), rgba(212,175,55,.35) 40%, rgba(0,0,0,0) 70%); opacity: 0; mix-blend-mode: screen; }
+  #end { background: rgba(19,22,21,.84) !important; }
+  #endGlow { position:absolute; left: 540px; top: 725px; width: 760px; height: 760px; margin: -380px 0 0 -380px; border-radius: 50%; background: radial-gradient(circle, rgba(212,175,55,.28), rgba(212,175,55,0) 62%); opacity: 0; }
+  .bigx.sub2 .w { font-size: 72px; letter-spacing: -1px; }
+  /* v5 educational layer */
+  #chap { position:absolute; right: 60px; top: 132px; display:flex; align-items:center; gap: 14px; background: rgba(19,22,21,.82); border: 2px solid rgba(212,175,55,.75); border-radius: 40px; padding: 12px 26px 12px 14px; color:#fff; font-size: 27px; font-weight: 800; letter-spacing: 3px; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+  #chap i { font-style: normal; width: 44px; height: 44px; border-radius: 50%; background:#D4AF37; color:#131615; display:flex; align-items:center; justify-content:center; font-size: 25px; letter-spacing: 0; }
+  #subs { top: 1360px; }
+  #subs.ui { top: 1530px; }
+  #subs.ui .w { font-size: 50px; }
+  #phone2 { left: 470px !important; top: 500px !important; width: 545px !important; height: 990px !important; }
+  #screen2 .scr { zoom: 1.2; }
+  .stepK { top: 140px !important; font-size: 28px !important; letter-spacing: 4px !important; }
+  .stepK b { color:#fff; }
+  .stepH { top: 196px !important; font-size: 66px !important; }
+  .lc { position:absolute; left: 48px; width: 395px; border-radius: 28px; padding: 22px 26px 24px; opacity: 0; box-shadow: 0 20px 50px rgba(0,0,0,.45); }
+  .lc small { display:flex; align-items:center; gap: 10px; font-size: 21px; letter-spacing: 3px; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; }
+  .lc .tx { font-size: 33px; line-height: 1.17; font-weight: 800; }
+  .lc .tx em { font-style: normal; color:#D4AF37; }
+  .lc.you { background:#F0EDE3; color:#131615; } .lc.you small { color:#8a6d12; }
+  .lc.does { background:#131615; color:#fff; border: 2px solid #D4AF37; } .lc.does small { color:#D4AF37; }
+  .lc.term { background: rgba(255,255,255,.07); color:#fff; border: 2px dashed rgba(212,175,55,.7); } .lc.term small { color:#D4AF37; } .lc.term .tx { font-size: 28px; font-weight: 700; } .lc.term .tx b { color:#D4AF37; }
+  .lc .arrow { position:absolute; left: 50%; bottom: -34px; margin-left: -14px; width: 28px; height: 28px; border-right: 5px solid #D4AF37; border-bottom: 5px solid #D4AF37; transform: rotate(45deg); opacity: .9; }
+  #uiIllus2 { bottom: auto !important; top: 1500px; left: 470px !important; right: auto !important; width: 545px; font-size: 18px !important; }
+  #recap { position:absolute; left: 90px; right: 90px; top: 175px; opacity: 0; }
+  #recap .rh { color:#D4AF37; font-size: 26px; letter-spacing: 6px; font-weight: 800; text-align:center; margin-bottom: 20px; }
+  #recap .rr { display:flex; gap: 14px; justify-content:center; }
+  #recap .ri { flex: 1; background: rgba(255,255,255,.06); border: 2px solid rgba(212,175,55,.55); border-radius: 22px; padding: 16px 10px 18px; text-align:center; color:#fff; font-size: 25px; font-weight: 800; line-height: 1.15; opacity: 0; }
+  #recap .ri i { display:flex; margin: 0 auto 10px; width: 44px; height: 44px; border-radius: 50%; background:#D4AF37; color:#131615; font-style: normal; align-items:center; justify-content:center; font-size: 24px; }
+</style></head><body><div id="stage">
+  <div id="botShade" class="abs"></div><div id="hookShade" class="abs"></div>
+  <div id="flash"></div>
+  <div id="chap"><i id="chapN">1</i><span id="chapT"></span></div>
+  <div id="bigs"></div>
+  <div id="batt"><div class="body"><div class="lvl" id="lvl"></div><svg class="bolt" id="bolt" viewBox="0 0 40 56"><path d="M24 0 L4 32 H18 L14 56 L36 22 H22 Z" fill="#D4AF37" stroke="#131615" stroke-width="2"/></svg><div class="cap"></div></div><div class="pct" id="pct">100%</div></div>
+  <div id="ui2">
+    <div class="glow"></div>
+    <div class="stepK" id="stepK"></div>
+    <div id="stepHs"></div>
+    <div id="persp2"><div id="phone2"><div id="notch2"></div><div id="screen2"></div></div></div>
+    <div id="lcs"></div>
+    <div id="uiIllus2" class="illus"></div>
+  </div>
+  <div id="end" class="abs"><div id="endGlow"></div>
+    <svg id="endLogo" viewBox="0 0 230 230"><rect x="5" y="5" width="220" height="220" rx="52" fill="#000" stroke="#2b2f2d" stroke-width="4"/>
+      <circle id="lgRing" cx="115" cy="115" r="56" fill="none" stroke="#fff" stroke-width="22" stroke-linecap="round" stroke-dasharray="352" stroke-dashoffset="352" transform="rotate(-90 115 115)"/>
+      <circle id="lgDot" cx="182" cy="48" r="17" fill="#D4AF37"/></svg>
+    <div id="recap"></div><div id="endWord">OneTap</div><div id="endTag">BUSINESS, CONNECTED.</div><div id="endCta"></div><div id="pts"></div>
+  </div>
+  <div id="subs" class="abs"></div>
+</div>
+<script>
+const P=new URLSearchParams(location.search); const D=JSON.parse(decodeURIComponent(P.get('d')));
+const ES=D.lang==='es'; const L=(a,b)=>ES?a:b;
+const $=id=>document.getElementById(id);
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)); const lin=(t,a,b)=>clamp((t-a)/(b-a));
+const eo=x=>1-Math.pow(1-x,3); const back=x=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2);};
+function fadeWin(t,a,b,fi=.3,fo=.3){ return Math.min(eo(lin(t,a,a+fi)), 1-lin(t,b-fo,b)); }
+// ---------- big words
+const BIG=[];
+D.beats.filter(b=>b.type==='big').forEach(b=>{ const el=document.createElement('div'); el.className='bigx'+(b.cls?' '+b.cls:''); if(b.top) el.style.top=b.top+'px';
+  el.innerHTML=b.w.map(w=>`<span class="w">${w}</span>`).join(' '); $('bigs').appendChild(el); BIG.push([b,[...el.querySelectorAll('.w')]]); });
+// ---------- screens
+const bar=`<div class="appbar"><div class="logo"></div><span>OneTap</span></div>`;
+const SCR={
+ import:()=>({h:L('Importar negocio','Import your business'), s:L('Sube un PDF o una foto','Upload a PDF or a photo'), html:
+   `<div class="paper"><div class="t">${L('LISTA DE PRECIOS','PRICE LIST')}</div>`+
+   [[L('Café americano','Americano'),'2.50'],[L('Capuchino','Cappuccino'),'3.25'],['Croissant','3.00'],[L('Sándwich de pavo','Turkey sandwich'),'6.00'],[L('Jugo natural','Fresh juice'),'3.50']].map(([n,p])=>`<div class="it"><span>${n}</span><span>$${p}</span></div>`).join('')+`<div class="scan"></div></div>`+
+   `<div class="pill2 ai"><b>✓</b>${L('5 productos creados','5 products created')}</div><div class="pill2 ai"><b>✓</b>${L('Precios y categorías listos','Prices and categories ready')}</div><div class="pill2 ai"><b>✓</b>${L('Inventario inicial armado','Starting inventory set up')}</div>`}),
+ invoice:()=>({h:L('Factura del proveedor','Supplier invoice'), s:L('Foto · leída con IA','Photo · read by AI'), html:
+   `<div class="inv"><div class="row" style="font-weight:800;color:#131615"><span>${L('Distribuidora Central','Central Supply Co.')}</span><span>#4821</span></div>`+
+   [[L('Café en grano · 5 lb','Coffee beans · 5 lb'),'42.00'],[L('Leche · 12 L','Milk · 12 L'),'18.00'],[L('Harina · 25 lb','Flour · 25 lb'),'21.50']].map(([n,p])=>`<div class="row ai"><span>${n}</span><span>$${p}</span></div>`).join('')+`<div class="row" style="border:0;font-weight:800;color:#131615"><span>Total</span><span>$81.50</span></div></div>`+
+   `<div class="chg ai"><span>${L('Inventario','Stock')}</span><b>${L('Actualizado ✓','Updated ✓')}</b></div><div class="chg ai"><span>${L('Costos','Costs')}</span><b>${L('Actualizados ✓','Updated ✓')}</b></div><div class="chg ai"><span>${L('Por pagar','Payable')}</span><b>${L('30 días','Net 30')}</b></div>`}),
+ margin:()=>({h:L('Ventas de hoy','Today\'s sales'), s:L('Margen por producto','Margin by product'), html:
+   [[L('Café americano','Americano'),'2.50','0.62','75%'],[L('Capuchino','Cappuccino'),'3.25','0.92','72%'],['Croissant','3.00','1.10','63%'],[L('Sándwich de pavo','Turkey sandwich'),'6.00','2.40','60%']].map(([n,p,c,m],i)=>
+   `<div class="dish ai${i==0?' hl':''}"><div class="n">${n}</div><div class="g"><div>${L('Precio','Price')}<b>$${p}</b></div><div>${L('Costo','Cost')}<b>$${c}</b></div><div class="mg">${L('Margen','Margin')}<b>${m}</b></div></div></div>`).join('')}),
+ brief:()=>({dark:true, h:L('Tu día de hoy','Your day today'), s:L('7:00 a. m. · 3 acciones','7:00 a.m. · 3 actions'), html:
+   [[L('Pide café en grano hoy','Order coffee beans today'),L('Llega al mínimo el jueves','You hit the minimum Thursday')],[L('Revisa el precio del croissant','Review the croissant price'),L('Su costo subió esta semana','Its cost went up this week')],[L('Refuerza el turno del sábado','Add help on Saturday'),L('Es tu día de más ventas','Your busiest day')]].map(([a,b],i)=>`<div class="bq ai"><i>${i+1}</i><div>${a}<small>${b}</small></div></div>`).join('')}),
+ hours:()=>({h:L('Configuración','Setup'), s:L('El tiempo depende de tus documentos','Timing depends on your documents'), html:
+   [[L('Productos importados','Products imported')],[L('Precios y categorías','Prices and categories')],[L('Inventario inicial','Starting inventory')],[L('Equipo y roles','Team and roles')]].map(([n])=>`<div class="card ai"><div><b>${n}</b></div><div class="v mg">✓</div></div>`).join('')+`<div class="card tot ai"><div><b>${L('Listo para vender','Ready to sell')}</b></div><div class="v">●</div></div>`}),
+ support:()=>({h:L('Empieza tú mismo','Get started'), s:L('A tu ritmo','At your own pace'), html:
+   `<div class="note ok ai">✓ ${L('Sin reuniones de implementación','No implementation meetings')}</div><div class="note ok ai">✓ ${L('Sin equipo de implementación','No implementation team required')}</div><div class="note gold ai">${L('Soporte por WhatsApp cuando lo necesites','Support on WhatsApp when you need it')}</div><div class="btnx ai" style="margin-top:16px">${L('Empezar ahora','Start now')}</div>`}),
+ connected:()=>({dark:true, h:L('Tu negocio','Your business'), s:L('Todo en un solo lugar','All in one place'), html:
+   [[L('Ventas','Sales'),L('En tiempo real','Real time')],[L('Inventario','Inventory'),L('Se descuenta solo','Updates itself')],[L('Costos','Costs'),L('Por producto','By product')],[L('Tu equipo','Your team'),L('Turnos y planilla','Shifts and payroll')],[L('Finanzas','Finances'),L('Flujo de caja','Cash flow')]].map(([n,d])=>`<div class="card ai"><div><b>${n}</b><span class="s">${d}</span></div><div class="v"><span class="ok">●</span></div></div>`).join('')+`<div class="card tot ai"><div><b>OneTap</b></div><div class="v">${L('Conectado','Connected')}</div></div>`}),
+ chat:()=>({h:L('Tu asistente','Your assistant'), s:L('Responde con tus cifras reales','Answers with your real numbers'), html:
+   `<div class="wa" style="background:#e9e4d8"><div class="bub out ai">${L('¿Cuánto me dejó el café esta semana?','How much did coffee make me this week?')}</div>`+
+   `<div class="bub in ai">${L('Vendiste 214 cafés americanos. Te dejaron <b>$402</b> de margen.','You sold 214 Americanos. They left you <b>$402</b> in margin.')}</div></div>`+
+   `<div class="auto ai"><div class="t">${L('Nivel de autonomía de la IA','AI autonomy level')}</div><div class="row"><span class="on">${L('Recomendar','Suggest')}</span><span>${L('Preparar','Draft')}</span><span>${L('Aprobar','Approve')}</span><span>${L('Actuar','Act')}</span></div></div>`+
+   `<div class="note gold ai" style="margin-top:12px">${L('Tú decides hasta dónde llega','You decide how far it goes')}</div>`}),
+};
+const FC={hours:[L('Sin semanas','No weeks'),L('Empiezas en horas','Start in hours')], support:[L('Soporte','Support'),L('Cuando lo necesites','When you need it')], connected:[L('Conectado','Connected'),L('Todo tu negocio','Your whole business')], import:[L('PDF o foto','PDF or photo'),L('Sin semanas de implementación','No weeks of setup')], invoice:[L('Facturas','Invoices'),L('Inventario y costos al día','Stock and costs up to date')],
+  margin:[L('Margen','Margins'),L('En cada producto','On every product')], brief:[L('Cada mañana','Every morning'),L('3 acciones para tu dinero','3 actions for your money')], chat:[L('Tú decides','You decide'),L('4 niveles de autonomía','4 levels of autonomy')]};
+const UI=D.beats.find(b=>b.type==='ui'); const ST=UI?UI.steps:[]; const NST=ST.length;
+const scrEls=[], hEls=[], fcEls=[];
+ST.forEach((s,i)=>{ const c=SCR[s.scr](); const e=document.createElement('div'); e.className='scr'+(c.dark?' dark':''); e.innerHTML=bar+`<h4>${c.h}</h4><div class="sub">${c.s}</div>`+c.html; $('screen2').appendChild(e); scrEls.push([e,[...e.querySelectorAll('.ai')]]);
+  const h=document.createElement('div'); h.className='stepH'; h.innerHTML=(UI.nonum?'':`<span class="num">${i+1}.</span> `)+s.h; $('stepHs').appendChild(h); hEls.push(h);
+  const cards=[]; let y=520;
+  if(s.you){ const c=document.createElement('div'); c.className='lc you'; c.style.top=y+'px'; c.innerHTML=`<small>${L('Tú haces','You do')}</small><div class="tx">${s.you}</div>`+(s.does?'<div class="arrow"></div>':''); $('lcs').appendChild(c); cards.push(c); y+=c.offsetHeight+58; }
+  if(s.does){ const c=document.createElement('div'); c.className='lc does'; c.style.top=y+'px'; c.innerHTML=`<small>${L('OneTap hace','OneTap does')}</small><div class="tx">${s.does}</div>`; $('lcs').appendChild(c); cards.push(c); y+=c.offsetHeight+30; }
+  if(s.term){ const c=document.createElement('div'); c.className='lc term'; c.style.top=y+'px'; c.innerHTML=`<small>${s.term[0]}</small><div class="tx">${s.term[1]}</div>`; $('lcs').appendChild(c); cards.push(c); }
+  fcEls.push(cards); });
+$('uiIllus2').textContent=L('Ejemplo ilustrativo','Illustrative example');
+$('endCta').innerHTML=`<div class="l1">${D.endl}</div><div class="btn">${L('Primer mes gratis','First month free')}</div><div style="margin-top:28px;font-size:34px;color:#9A9B98">${L('Sin tarjeta · onetaphq.com','No card required · onetaphq.com')}</div>`;
+if(D.recap) $('recap').innerHTML=`<div class="rh">${L('RESUMEN','RECAP')}</div><div class="rr">${D.recap.map((r,k)=>`<div class="ri"><i>${k+1}</i>${r}</div>`).join('')}</div>`;
+let ph=''; for (let i=0;i<40;i++){ ph+=`<div class="pt" id="pt${i}"></div>`; } $('pts').innerHTML=ph;
+// subs
+const chunks=[]; (D.words||[]).forEach(sent=>{ let g=[]; sent.forEach(([w,a,b],i)=>{ g.push([w,a,b]); const brk=/[.,:?!]$/.test(w); const left=sent.length-1-i; if((g.length>=4 && left!==1) || (brk && g.length>=2 && left!==1) || left===0){ chunks.push(g); g=[]; } }); if(g.length) chunks.push(g); });
+for(let i=0;i<chunks.length;i++){ const g=chunks[i]; const nx=chunks[i+1]; g.until=Math.min(g[g.length-1][2]+0.45, nx? nx[0][1]-0.04 : 1e9); }
+(D.segs||[]).forEach(([a,b,txt])=>{ const ws=txt.split(' '); const tot=ws.reduce((s,w)=>s+w.length+1,0); let t=a; const per=(b-a)/tot;
+  const wt=ws.map(w=>{const s=t; t+=(w.length+1)*per; return [w,s,t];}); for(let i=0;i<wt.length;i+=4){ const g=wt.slice(i,i+4); if(i+4<wt.length && wt.length-(i+4)===1){g.push(wt[i+4]); i++;} chunks.push(g);} });
+const BAT=D.beats.find(b=>b.type==='batt'); const FL=D.beats.filter(b=>b.type==='flash');
+function battAt(t){ const k=BAT.k; if(t<=k[0][0]) return k[0][1]; for(let i=1;i<k.length;i++){ if(t<=k[i][0]){ const [t0,v0]=k[i-1],[t1,v1]=k[i]; return v0+(v1-v0)*eo(lin(t,t0,t1)); } } return k[k.length-1][1]; }
+window.seek=function(t){
+  const end=t>=D.end; const inUI=UI && t>=UI.a && t<UI.b;
+  let anyBig=0;
+  BIG.forEach(([b,ws])=>{ const out=b.b; const st=b.step||0.11; ws.forEach((w,i)=>{ let s=b.a+i*st; if(b.at) s=b.at[i]; const k=back(lin(t,s,s+.35)); w.style.opacity=clamp(lin(t,s,s+.2))*(1-lin(t,out-.25,out)); w.style.transform=`translateY(${(1-k)*60}px) scale(${.85+.15*k})`; }); if(t>=b.a&&t<b.b) anyBig=1; });
+  $('hookShade').style.opacity = (end||inUI)?0:(anyBig?1:0.35);
+  $('botShade').style.opacity = (end||inUI)?0:1;
+  // flash
+  let fl=0; FL.forEach(f=>{ fl=Math.max(fl, Math.min(eo(lin(t,f.a-.12,f.a)), 1-lin(t,f.a,f.a+.5))); }); $('flash').style.opacity=fl*0.85;
+  // battery
+  if(BAT){ $('batt').style.opacity=Math.max(...BAT.win.map(([a,b])=>fadeWin(t,a,b,.3,.3))); { const v=battAt(t); const charging=BAT.charge && t>=BAT.charge[0] && t<BAT.charge[1]+0.6;
+    $('lvl').style.width=Math.max(2,v)+'%'; $('pct').textContent=Math.round(v)+'%';
+    $('lvl').style.background = charging? '#D4AF37' : (v>55?'#3fbf7f':(v>25?'#e0a32e':'#e5484d'));
+    const blink = (!charging && v<12)? (0.35+0.65*Math.abs(Math.sin(t*7))) : 1; $('lvl').style.opacity=blink;
+    $('bolt').style.opacity = charging? (0.6+0.4*Math.sin(t*10)) : 0;
+    $('batt').style.transform=`scale(${1+(charging?0.06*Math.sin(t*8):0)})`; $('batt').style.transformOrigin='left center'; } }
+  // UI
+  if(UI){ $('ui2').style.opacity = inUI? Math.min(eo(lin(t,UI.a,UI.a+.3)), 1-lin(t,UI.b-.2,UI.b)) : 0;
+    if(inUI){ const lt=t-UI.a; const ent=eo(lin(lt,0,.7)); const ry=-14+9*Math.sin(lt*0.45), rx=5-3*Math.cos(lt*0.5);
+      $('phone2').style.transform=`translateY(${(1-ent)*500+Math.sin(lt*1.1)*8}px) rotateY(${ry}deg) rotateX(${rx}deg) scale(${.96+.04*ent})`;
+      let cur=0; ST.forEach((s,i)=>{ if(t>=s.t) cur=i; });
+      $('stepK').style.opacity=eo(lin(lt,.1,.4)); const CH=UI.chn||[]; const cc=ST[cur].ch||0; $('stepK').innerHTML=`${L('PASO','STEP')} <b>${cc+1}</b> ${L('DE','OF')} ${CH.length} · ${CH[cc]}<span class="dots">${CH.map((x,i)=>`<i class="${i<=cc?'on':''}"></i>`).join('')}</span>`;
+      ST.forEach((s,i)=>{ const a=s.t, b=(i+1<NST? ST[i+1].t : UI.b);
+        const h=hEls[i]; const ho = Math.min(eo(lin(t,a-.05,a+.3)), i+1<NST? 1-lin(t,b-.25,b) : 1); h.style.opacity=ho; h.style.transform=`translateY(${(1-eo(lin(t,a-.05,a+.4)))*40}px)`;
+        const [e,items]=scrEls[i]; const o = Math.min(i==0?1:eo(lin(t,a-.2,a+.15)), i+1<NST? 1-lin(t,b-.1,b+.2):1); e.style.opacity=o; e.style.clipPath = i==0?'none':`circle(${eo(lin(t,a-.2,a+.35))*150}% at 80% 10%)`;
+        const d=b-a; const step=Math.min(0.32,(d-0.9)/Math.max(1,items.length));
+        items.forEach((x,j)=>{ const s0=a+(s.scr=='import'?1.25:0.35)+j*step; x.style.opacity=eo(lin(t,s0,s0+.22)); x.style.transform=`translateY(${(1-back(lin(t,s0,s0+.4)))*36}px)`; });
+        if(s.scr=='import'){ const sc=e.querySelector('.scan'); const k=lin(t,a+.15,a+1.25); sc.style.opacity=(k>0&&k<1)?1:0; sc.style.top=(k*100)+'%'; }
+        fcEls[i].forEach((f,j)=>{ const s0=a+.35+j*(s.gap||0.55); f.style.opacity=Math.min(eo(lin(t,s0,s0+.3)), i+1<NST? 1-lin(t,b-.2,b+.05):1); f.style.transform=`translateX(${(1-back(lin(t,s0,s0+.45)))*-80}px)`; }); });
+    } }
+  // chapter pill
+  { const C=(D.chap||[]).find(c=>t>=c[0]&&t<c[1]); const po=C? Math.min(eo(lin(t,C[0],C[0]+.35)),1-lin(t,C[1]-.25,C[1])) : 0; $('chap').style.opacity=(inUI||end)?0:po; if(C){ $('chapN').textContent=C[2]; $('chapT').textContent=C[3]; $('chap').style.transform=`translateX(${(1-back(lin(t,C[0],C[0]+.45)))*60}px)`; } }
+  if(end){ const lt=t-D.end; $('recap').style.opacity=eo(lin(lt,1.6,2.0)); [...document.querySelectorAll('#recap .ri')].forEach((e,k)=>{ const s0=1.8+k*0.22; e.style.opacity=eo(lin(lt,s0,s0+.3)); e.style.transform=`translateY(${(1-back(lin(lt,s0,s0+.45)))*30}px)`; }); }
+  // end
+  $('end').style.opacity = end ? eo(lin(t,D.end,D.end+.3)) : 0;
+  if (end) { const lt=t-D.end;
+    $('lgRing').setAttribute('stroke-dashoffset', 352*(1-eo(lin(lt,.15,.9)))); $('lgDot').style.transform=`scale(${back(lin(lt,.8,1.1))})`; $('lgDot').style.transformOrigin='182px 48px';
+    $('endLogo').style.transform=`scale(${(.9+.1*eo(lin(lt,0,.6)))*(1+0.035*Math.sin(lt*1.3))})`; $('endGlow').style.opacity=eo(lin(lt,.3,1.2))*(0.7+0.3*Math.sin(lt*2.1)); $('endGlow').style.transform=`scale(${1+0.08*Math.sin(lt*1.1)})`; $('endWord').style.opacity=eo(lin(lt,.6,.9)); $('endTag').style.opacity=eo(lin(lt,.8,1.1));
+    $('endCta').style.opacity=eo(lin(lt,1.0,1.4)); $('endCta').style.transform=`translateY(${(1-eo(lin(lt,1.0,1.5)))*40}px)`; const bt=$('endCta').querySelector('.btn'); if(bt) bt.style.transform=`scale(${1+0.035*Math.max(0,Math.sin((lt-1.6)*2.6))*(lt>1.6?1:0)})`;
+    for (let i=0;i<40;i++){ const e=$('pt'+i); const ang=i*2.4, r=60+((i*37)%180), s=.7+(i%7)*.05; const k=lt<s?-1:((lt-s)%2.6)/2.6; e.style.opacity=(k>0&&k<1)?(1-k)*(lt<s+2.6?1:0.75):0; e.style.left=(540+Math.cos(ang)*(r+k*260))+'px'; e.style.top=(725+Math.sin(ang)*(r+k*260))+'px'; } }
+  const sub=$('subs'); const ch=end?null:chunks.find(g=>t>=g[0][1]-0.06 && t<g.until); sub.className=inUI?'abs ui':'abs';
+  if(ch){ const act=ch.filter(([w,a])=>t>=a-0.03).length-1; sub.innerHTML=ch.map(([w,a,b],k)=>`<span class="w${k===act?' on':''}">${w}</span>`).join(''); } else sub.innerHTML='';
+};
+window.seek(0);
+</script></body></html>
