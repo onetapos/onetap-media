@@ -1,0 +1,10 @@
+[
+ {"folder":"Mon_01_Carousel_Use_it_before_you_lose_it","slides":[
+  {"dark":true,"label":"USE IT BEFORE YOU LOSE IT","h":"Expired stock is money you already paid for.","s":"Milk past its date. Flour nobody counted. Cream that sat too long.","pills":["MILK","FLOUR","CREAM"]},
+  {"label":"USE IT BEFORE YOU LOSE IT","h":"Record the lot and expiry date.","s":"Every product gets its lot and expiry date the moment it comes in.","pills":["RECEIVE","LOT","EXPIRY"]},
+  {"label":"USE IT BEFORE YOU LOSE IT","h":"Get alerts before it is too late.","s":"OneTap warns you before products expire or drop below your minimum.","pills":["EXPIRING","LOW STOCK","ALERT"]},
+  {"label":"USE IT BEFORE YOU LOSE IT","h":"Log waste with its reason and cost.","s":"See what was thrown out, why, and what it cost. Compare physical counts against expected stock.","pills":["WASTE","REASON","COST"]},
+  {"dark":true,"label":"USE IT BEFORE YOU LOSE IT","h":"Try your first month free.","s":"No card required.<br>Start at onetaphq.com","pills":["SIGN UP","UPLOAD","READY"]}]},
+ {"folder":"Mon_01_Story","story":true,"slides":[
+  {"dark":true,"label":"QUICK POLL","h":"How often do you throw out expired stock?","s":"Every week or rarely? Tell us below."}]}
+]
