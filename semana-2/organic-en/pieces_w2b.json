@@ -1,0 +1,10 @@
+[
+ {"folder":"Tue_10_Carousel_Do_I_need_to_install_anything","slides":[
+  {"dark":true,"label":"FAQ","h":"Do I need to install anything?","s":"It is the question we hear most.","pills":["PHONE","IPAD","COMPUTER"]},
+  {"label":"FAQ","h":"No. OneTap runs in your browser.","s":"Open it on your phone, iPad or computer. Nothing to download.","pills":["BROWSER","LOG IN","READY"]},
+  {"label":"FAQ","h":"Sell with a common barcode reader.","s":"No special hardware. A standard reader works with the point of sale.","pills":["SCAN","SELL","STOCK"]},
+  {"label":"FAQ","h":"Your team clocks in with a PIN.","s":"Attendance from the tablet, with roles and permissions for each person.","pills":["PIN","SHIFT","ROLES"]},
+  {"dark":true,"label":"FAQ","h":"Follow your business live from your phone.","s":"First month free, no card required.<br>onetaphq.com","pills":["SALES","TABLES","STOCK"]}]},
+ {"folder":"Tue_10_Story","story":true,"slides":[
+  {"dark":true,"label":"QUICK POLL","h":"Where do you run your business from?","s":"My phone or a computer? Tell us below."}]}
+]
