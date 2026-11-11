@@ -1,0 +1,10 @@
+[
+ {"folder":"Fri_13_Carousel_Payroll_day_sorted","slides":[
+  {"dark":true,"label":"SALONS · BARBERSHOPS · SPAS · CLINICS","h":"Payroll day should not take all day.","s":"Hours, commissions, legal deductions, and a spreadsheet you rebuild every month.","pills":["HOURS","COMMISSIONS","PAYROLL"]},
+  {"label":"PAYROLL DAY, SORTED","h":"Your team clocks in with a PIN.","s":"Attendance from the tablet. Shifts and hours recorded as they happen.","pills":["PIN","SHIFT","HOURS"]},
+  {"label":"PAYROLL DAY, SORTED","h":"Commissions calculated automatically.","s":"Each professional's commissions come straight from the services they did.","pills":["SERVICE","PROFESSIONAL","COMMISSION"]},
+  {"label":"PAYROLL DAY, SORTED","h":"Legal charges for your country, applied.","s":"Payroll uses the legal charges set for your country. Roles and permissions for each person.","pills":["PAYROLL","LEGAL","ROLES"]},
+  {"dark":true,"label":"PAYROLL DAY, SORTED","h":"Close payroll without the calculator.","s":"First month free, no card required.<br>onetaphq.com","pills":["ATTENDANCE","COMMISSIONS","PAYROLL"]}]},
+ {"folder":"Fri_13_Story","story":true,"slides":[
+  {"dark":true,"label":"QUICK POLL","h":"How long does payroll take you?","s":"An hour or less, or half a day or more? Tell us below."}]}
+]
