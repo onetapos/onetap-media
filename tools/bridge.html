@@ -1,0 +1,18 @@
+<!doctype html><meta charset="utf-8"><title>OneTap media bridge</title>
+<script>
+(async()=>{
+  const q=new URLSearchParams(location.search);
+  const files=(q.get('f')||'').split(',').filter(Boolean);
+  const target=q.get('o')||'https://business.facebook.com';
+  try{
+    const out=[];
+    for(const p of files){
+      const r=await fetch('https://raw.githubusercontent.com/onetapos/onetap-media/main/'+p);
+      if(!r.ok) throw new Error('HTTP '+r.status+' '+p);
+      const b=await r.blob();
+      out.push(new File([b], p.split('/').pop(), {type:b.type||'application/octet-stream'}));
+    }
+    parent.postMessage({type:'ot-files', files:out}, target);
+  }catch(e){ parent.postMessage({type:'ot-files-error', error:String(e)}, target); }
+})();
+</script>
