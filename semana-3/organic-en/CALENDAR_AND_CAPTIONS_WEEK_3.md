@@ -2,6 +2,7 @@
 
 Instagram + Facebook, 1:00 p.m. Panama. Scheduled in Meta Business Suite after Luz approves.
 Feed order keeps the mix: static, reel, carousel.
+App screens in the pieces are illustrative examples (marked on each slide), not real customer data.
 
 | Day | Format | Topic | Vertical |
 |---|---|---|---|
@@ -48,7 +49,7 @@ Files: Sun_22_Carousel_Close_the_day_in_minutes/01.png to 05.png
 
 Sales, taxes, tips, cash. The day ends, but the math keeps going.
 
-With OneTap you close each shift with a cash count, and at midnight the day closes itself: sales, taxes, tips, ingredients used, waste and labor cost in one daily close. Check it live from your phone.
+With OneTap you close each shift with a cash count, and at midnight the day closes itself: sales, taxes, tips, ingredients used, waste and labor cost in one daily close. Want the short version? Ask the AI how the day went, and it answers with your real numbers.
 
 Save this for tonight's close. First month free, no card required. Link in bio.
 
@@ -93,7 +94,7 @@ Files: Wed_25_Carousel_Who_stopped_coming_back/01.png to 05.png
 
 Regulars rarely say goodbye. They just stop showing up.
 
-OneTap keeps each customer's history in one profile and spots the ones who went quiet, so you can reach out before they are gone for good.
+OneTap keeps each customer's history in one profile. Ask the AI who stopped coming, and reach out before they are gone for good.
 
 Who would you call first? First month free, no card required. Link in bio.
 
