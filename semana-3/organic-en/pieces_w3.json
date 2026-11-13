@@ -1,0 +1,20 @@
+[
+ {"folder":"Fri_20_Post_Reorder_before_the_shelf_is_empty","slides":[
+  {"dark":true,"label":"RETAIL · SHOPS WITH INVENTORY","h":"Reorder before the shelf is empty.","s":"OneTap drafts purchase orders from your <b>real consumption</b>, ready to send to your supplier by WhatsApp or email.","pills":["CONSUMPTION","ORDER","SUPPLIER"]}]},
+ {"folder":"Sun_22_Carousel_Close_the_day_in_minutes","slides":[
+  {"dark":true,"label":"CLOSE THE DAY","h":"The day ends. The math does not.","s":"Sales, taxes, tips, cash. One more hour after closing, every single night.","pills":["SALES","TAXES","TIPS"]},
+  {"label":"CLOSE THE DAY","h":"Close the shift with a cash count.","s":"Cash, card or credit, with tips included. The drawer is counted against what the system expects.","pills":["CASH","CARD","COUNT"]},
+  {"label":"CLOSE THE DAY","h":"At midnight, the day closes itself.","s":"Sales, taxes, tips, ingredients used, waste and labor cost, all in one daily close.","pills":["SALES","WASTE","LABOR"]},
+  {"label":"CLOSE THE DAY","h":"See it live from your phone.","s":"Reports by day, product, hour and channel. No spreadsheet to rebuild.","pills":["DAY","PRODUCT","HOUR"]},
+  {"dark":true,"label":"CLOSE THE DAY","h":"Try your first month free.","s":"No card required.<br>Start at onetaphq.com","pills":["SIGN UP","UPLOAD","READY"]}]},
+ {"folder":"Mon_23_Post_Your_morning_briefing","slides":[
+  {"dark":true,"label":"EVERY MORNING","h":"Your business, in 3 actions.","s":"Each morning OneTap gives you a briefing with <b>3 actions</b> and what each one means in money. Then you decide.","pills":["READ","DECIDE","ACT"]}]},
+ {"folder":"Wed_25_Carousel_Who_stopped_coming_back","slides":[
+  {"dark":true,"label":"YOUR CUSTOMERS","h":"Who stopped coming back?","s":"Regulars rarely say goodbye. They just stop showing up.","pills":["REGULAR","QUIET","GONE"]},
+  {"label":"YOUR CUSTOMERS","h":"Every customer has a history.","s":"Visits, purchases and balance, in one profile.","pills":["VISITS","PURCHASES","BALANCE"]},
+  {"label":"YOUR CUSTOMERS","h":"OneTap spots who went quiet.","s":"It detects customers who stopped coming, so you notice before they are gone for good.","pills":["DETECT","LIST","REACH OUT"]},
+  {"label":"YOUR CUSTOMERS","h":"Then you reach out.","s":"A message, a call, a reason to come back. You choose how.","pills":["MESSAGE","CALL","WELCOME BACK"]},
+  {"dark":true,"label":"YOUR CUSTOMERS","h":"Try your first month free.","s":"No card required.<br>Start at onetaphq.com","pills":["SIGN UP","UPLOAD","READY"]}]},
+ {"folder":"Thu_26_Post_Snap_the_invoice","slides":[
+  {"dark":true,"label":"RESTAURANTS · SHOPS · CAFÉS","h":"Snap the invoice. Skip the typing.","s":"Take a photo of the supplier invoice. OneTap updates <b>stock, costs and accounts payable</b>.","pills":["PHOTO","STOCK","COSTS"]}]}
+]
